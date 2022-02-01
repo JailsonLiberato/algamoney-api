@@ -3,6 +3,7 @@ package com.algaworks.algamoneyapi.config;
 import com.algaworks.algamoneyapi.config.token.CustomTokenEnhancer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -19,6 +20,8 @@ import java.util.Arrays;
 
 import static com.algaworks.algamoneyapi.config.ResourceServerConfig.passwordEncoder;
 
+@SuppressWarnings("deprecation")
+@Profile("oauth-security")
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -29,6 +32,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public AuthorizationServerConfig(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         this.authenticationManager = authenticationConfiguration.getAuthenticationManager();
     }
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory().withClient("angular")
